@@ -259,7 +259,7 @@ def main() -> None:
     x_recovery_lowpass = lowpass_reconstruct(y, h)
     M = x_recovery_lowpass.m
 
-    x_rec = x_recovery_lowpass.recovered
+    x_rec = np.copy(x_recovery_lowpass.recovered)
     x_rec[x_rec < 0.5] = 0
     x_rec[x_rec > 0.5] = 1
 
@@ -276,7 +276,7 @@ def main() -> None:
 
     shift = N // 2
     n = len(encoded_message)
-    mse = np.sum((encoded_message - x_recovery_lowpass.recovered[shift: shift + n])**2) / n
+    mse = np.mean((encoded_message - x_recovery_lowpass.recovered[shift: shift + n])**2)
     print(f"\nMSE ФР НИЧ : {mse}")
 
 
